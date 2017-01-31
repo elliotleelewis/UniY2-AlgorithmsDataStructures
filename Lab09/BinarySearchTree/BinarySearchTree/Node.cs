@@ -15,5 +15,6 @@ namespace BinarySearchTree
             Right = null;
         }
         public T Data { set; get; }
+        public int BalanceFactor { set; get; }
     }
 }

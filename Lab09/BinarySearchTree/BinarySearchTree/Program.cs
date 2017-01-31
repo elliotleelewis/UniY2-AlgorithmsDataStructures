@@ -9,19 +9,13 @@ namespace BinarySearchTree
     {
         private static void Main(string[] args)
         {
-            var tree = new BSTree<int>();
-            tree.InsertItem(21);
-            tree.InsertItem(7);
-            tree.InsertItem(30);
-            tree.InsertItem(3);
-            tree.InsertItem(9);
-            tree.InsertItem(24);
-            tree.InsertItem(39);
-            tree.InsertItem(12);
-            Console.WriteLine(tree.InOrder());
-            Console.WriteLine(tree.Contains(21));
-            tree.RemoveItem(21);
-            Console.WriteLine(tree.Contains(21));
+            var tree = new AVLTree<int>();
+            tree.InsertItem(25);
+            tree.InsertItem(15);
+            tree.InsertItem(10);
+            tree.InsertItem(20);
+            tree.InsertItem(23);
+            tree.InsertItem(17);
             Console.WriteLine(tree.InOrder());
             Console.ReadKey();
         }

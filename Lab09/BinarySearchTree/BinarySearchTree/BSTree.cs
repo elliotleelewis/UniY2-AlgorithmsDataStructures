@@ -28,7 +28,7 @@ namespace BinarySearchTree
         {
             return _height(root);
         }
-        private int _height(Node<T> tree)
+        protected int _height(Node<T> tree)
         {
             if (tree == null) {
                 return 0;
