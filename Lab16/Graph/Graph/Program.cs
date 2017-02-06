@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,16 +17,19 @@ namespace Graph
             graph.AddNode('E');
             graph.AddNode('F');
             graph.AddEdge('A', 'B');
+            graph.AddEdge('A', 'C');
+            graph.AddEdge('A', 'D');
             graph.AddEdge('B', 'C');
+            graph.AddEdge('B', 'E');
             graph.AddEdge('C', 'D');
-            graph.AddEdge('A', 'E');
-            graph.AddEdge('A', 'F');
-            var current = graph.GetNodeById('A');
-            var to = graph.GetNodeById('B');
-            Console.WriteLine("Is graph empty? Answer: {0}", graph.IsEmptyGraph());
-            Console.WriteLine("Does graph contain {0}? Answer: {1}", current.Id, graph.ContainsGraph(current));
-            Console.WriteLine("Is node {0} and {1} adjacent? Answer: {2}", current.Id, to.Id, graph.IsAdjacent(current, to));
-            Console.WriteLine("Is node {0} and {1} adjacent? Answer: {2}", to.Id, current.Id, graph.IsAdjacent(to, current));
+            graph.AddEdge('C', 'E');
+            graph.AddEdge('C', 'F');
+            graph.AddEdge('D', 'F');
+            var visited = new List<char>();
+            graph.BreadthFirstTraverse('A', ref visited);
+            for (var i = 0; i < visited.Count; i++) {
+                Console.WriteLine(visited[i]);
+            }
             Console.ReadKey();
         }
     }

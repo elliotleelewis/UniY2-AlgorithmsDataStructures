@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +38,38 @@ namespace Graph
             var toNode = GetNodeById(to);
             if(!IsAdjacent(fromNode, toNode))
                 fromNode.AddEdge(toNode);
+        }
+        public void DepthFirstTraverse(T startId, ref List<T> visited)
+        {
+            var toVisit = new Stack<T>();
+            toVisit.Push(startId);
+            while (toVisit.Count != 0) {
+                var current = GetNodeById(toVisit.Pop());
+                visited.Add(current.Id);
+                foreach (var node in current.GetAdjList()) {
+                    if (!visited.Contains(node) && !toVisit.Contains(node))
+                    {
+                        toVisit.Push(node);
+                    }
+                }
+            }
+        }
+        public void BreadthFirstTraverse(T startId, ref List<T> visited)
+        {
+            var toVisit = new Queue<T>();
+            toVisit.Enqueue(startId);
+            while (toVisit.Count != 0)
+            {
+                var current = GetNodeById(toVisit.Dequeue());
+                visited.Add(current.Id);
+                foreach (var node in current.GetAdjList())
+                {
+                    if (!visited.Contains(node) && !toVisit.Contains(node))
+                    {
+                        toVisit.Enqueue(node);
+                    }
+                }
+            }
         }
     }
 }
