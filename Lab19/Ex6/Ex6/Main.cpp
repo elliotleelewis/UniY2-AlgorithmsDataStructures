@@ -3,7 +3,7 @@
 using namespace std;
 void sub(char a, char b, string &val)
 {
-	for(int i = 0; i < val.length(); i++)
+	for(auto i = 0; i < val.length(); i++)
 	{
 		if(val[i] == a)
 		{
