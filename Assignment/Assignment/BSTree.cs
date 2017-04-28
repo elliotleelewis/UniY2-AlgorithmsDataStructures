@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Assignment
 {
-    internal class BSTree<T> : BinTree<T> where T : IComparable
+    public class BSTree<T> : BinTree<T> where T : IComparable
     {
         public BSTree()
         {
@@ -13,11 +13,11 @@ namespace Assignment
         }
         private static void _insertItem(T item, ref Node<T> tree)
         {
-            if (tree == null)
+            if(tree == null)
                 tree = new Node<T>(item);
-            else if (item.CompareTo(tree.Data) < 0)
+            else if(item.CompareTo(tree.Data) < 0)
                 _insertItem(item, ref tree.Left);
-            else if (item.CompareTo(tree.Data) > 0)
+            else if(item.CompareTo(tree.Data) > 0)
                 _insertItem(item, ref tree.Right);
         }
         public int Height()
@@ -26,8 +26,7 @@ namespace Assignment
         }
         protected int _height(Node<T> tree)
         {
-            if (tree == null)
-            {
+            if(tree == null) {
                 return 0;
             }
             return 1 + Math.Max(_height(tree.Left), _height(tree.Right));
@@ -38,12 +37,10 @@ namespace Assignment
         }
         private static bool _contains(Node<T> tree, T item)
         {
-            if (tree == null)
-            {
+            if(tree == null) {
                 return false;
             }
-            if (tree.Data.Equals(item))
-            {
+            if(tree.Data.Equals(item)) {
                 return true;
             }
             return _contains(tree.Left, item) || _contains(tree.Right, item);
@@ -54,28 +51,22 @@ namespace Assignment
         }
         private static void _removeItem(T item, ref Node<T> tree)
         {
-            if (tree == null)
-            {
+            if(tree == null) {
                 return;
             }
-            if (item.CompareTo(tree.Data) < 0)
-            {
+            if(item.CompareTo(tree.Data) < 0) {
                 _removeItem(item, ref tree.Left);
             }
-            else if (item.CompareTo(tree.Data) > 0)
-            {
+            else if(item.CompareTo(tree.Data) > 0) {
                 _removeItem(item, ref tree.Right);
             }
-            else if (tree.Left == null)
-            {
+            else if(tree.Left == null) {
                 tree = tree.Right;
             }
-            else if (tree.Right == null)
-            {
+            else if(tree.Right == null) {
                 tree = tree.Left;
             }
-            else
-            {
+            else {
                 var newRoot = _leastItem(tree.Right);
                 tree.Data = newRoot;
                 _removeItem(newRoot, ref tree.Right);

@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Assignment
 {
-    internal class BinTree<T> where T : IComparable
+    public class BinTree<T> where T : IComparable
     {
         protected Node<T> root;
         public BinTree()

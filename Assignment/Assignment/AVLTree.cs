@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Assignment
 {
-    internal class AVLTree<T> : BSTree<T> where T : IComparable
+    public class AVLTree<T> : BSTree<T> where T : IComparable
     {
         public void Update()
         {
@@ -10,11 +10,11 @@ namespace Assignment
         }
         private void _update(ref Node<T> tree)
         {
-            if (tree == null) return;
+            if(tree == null) return;
             tree.BalanceFactor = _height(tree.Left) - _height(tree.Right);
-            if (tree.BalanceFactor <= -2)
+            if(tree.BalanceFactor <= -2)
                 _rotateLeft(ref tree);
-            if (tree.BalanceFactor >= 2)
+            if(tree.BalanceFactor >= 2)
                 _rotateRight(ref tree);
             _update(ref tree.Left);
             _update(ref tree.Right);

@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 namespace Assignment
 {
-    internal class CountryTree : AVLTree<Country>
+    public class CountryTree : AVLTree<Country>
     {
-        public CountryTree() : base()
+        private readonly string[] _headers;
+        public CountryTree(string[] headers) : base()
         {
             UpdateBestTradePartner();
+            _headers = headers;
         }
+        public Country BestTradePartner { get; set; }
         public new void InsertItem(Country item)
         {
             base.InsertItem(item);
@@ -17,7 +21,30 @@ namespace Assignment
             base.RemoveItem(item);
             UpdateBestTradePartner();
         }
-        public Country BestTradePartner { get; set; }
+        public Country[] Search(string query)
+        {
+            var results = new List<Country>();
+            query = query.Trim().Replace(' ', '_');
+            _search(query, root, ref results);
+            return results.ToArray();
+        }
+        private static void _search(string query, Node<Country> root, ref List<Country> results)
+        {
+            while(root != null) {
+                _search(query, root.Left, ref results);
+                if(root.Data.Name.ToLower().Contains(query.ToLower()))
+                    results.Add(root.Data);
+                root = root.Right;
+            }
+        }
+        public bool Has(string country)
+        {
+            return _has(country.Trim().ToLower(), root);
+        }
+        private static bool _has(string country, Node<Country> root)
+        {
+            return root != null && (root.Data.Name.Trim().ToLower().Equals(country) || _has(country, root.Left) || _has(country, root.Right));
+        }
         public Country[] ToArray()
         {
             var list = new List<Country>();
@@ -34,16 +61,8 @@ namespace Assignment
         }
         public string[] ToCSV()
         {
-            var headers = new[] {
-                "Country",
-                "GDP growth",
-                "Inflation",
-                "Trade Balance",
-                "HDI Ranking",
-                "Main Trade Partners"
-            };
             var output = new List<string> {
-                string.Join(",", headers)
+                string.Join(",", _headers)
             };
             foreach(var country in ToArray()) {
                 var temp = country.Name + ",";
@@ -71,9 +90,7 @@ namespace Assignment
             var bestPotential = 0f;
             for(var i = 1; i < array.Length; i++) {
                 var country = array[i];
-                var potential = 0f;
-                foreach(var partner in country.MainTradePartners)
-                    potential += partner.GDPGrowth;
+                var potential = country.MainTradePartners.Sum(partner => partner.GDPGrowth);
                 if(potential <= bestPotential) continue;
                 best = country;
                 bestPotential = potential;
